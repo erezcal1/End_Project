@@ -72,7 +72,7 @@ router.post("/favorites/remove", authMiddleware, async (req, res) => {
 router.get("/favorites", authMiddleware, async (req, res) => {
   try {
     const favSongs = await usersModule.selectSongsByEmail(req.body);
-    res.json(favSongs);
+    res.json(favSongs.favoriteSongs);
   } catch (err) {
     res.status(401).json(err);
   }

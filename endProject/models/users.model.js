@@ -70,7 +70,8 @@ const selectUserByEmail = (email) => {
   return Users.find({ email });
 };
 const selectSongsByEmail = (email) => {
-  return Users.find({ email }, favoriteSongs);
+  // return Users.find({ email }, favoriteSongs);
+  return Users.find({ email });
 };
 
 module.exports = {

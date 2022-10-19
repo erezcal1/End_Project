@@ -43,7 +43,6 @@ router.post("/signup", async (req, res) => {
         <a href="${urlSecretKey}">verification email</a>
       `,
     });
-    for (let i = 0; i < 10; i++) {}
 
     res.json(new CustomRes(CustomRes.STATUSES.ok, "User Created"));
   } catch (e) {
@@ -61,11 +60,11 @@ router.post("/signIn", async (req, res) => {
         CustomRes.STATUSES.failed,
         "Invalid Email or Password"
       );
-    if (!usersData.emailVerification.didHeDoIt)
-      throw new CustomRes(
-        CustomRes.STATUSES.failed,
-        "need to do an email verification"
-      );
+    // if (!usersData.emailVerification.didHeDoIt)
+    //   throw new CustomRes(
+    //     CustomRes.STATUSES.failed,
+    //     "need to do an email verification"
+    //   );
     const hashResult = await bcrypt.compareHash(
       validateLogIn.password,
       usersData[0].password

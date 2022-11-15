@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const emailRole = {
-  email: Joi.string().email().min(6).max(255).trim().required(),
+  email: Joi.string().email().min(6).max(255).required(),
 };
 
 const passwordRole = {
@@ -47,6 +47,9 @@ const recoveryPassword = Joi.object({
 const recoveryPassEmailCheckSchema = Joi.object({
   ...emailRole,
 });
+const emailSchema = Joi.object({
+  ...emailRole,
+});
 
 const validateSignUpSchema = (data) => {
   return signUpSchema.validateAsync(data, { abortEarly: false });
@@ -60,6 +63,10 @@ const validateForgetPasswordSchema = (data) => {
 const validateRecoveryPasswordSchema = (data) => {
   return recoveryPassword.validateAsync(data, { abortEarly: false });
 };
+const validateEmailSchema = (data) => {
+  console.log(data, "data");
+  return emailSchema.validateAsync(data);
+};
 const validateRecoveryPassEmailCheckSchema = (data) => {
   return recoveryPassEmailCheckSchema.validateAsync(data, {
     abortEarly: false,
@@ -71,4 +78,5 @@ module.exports = {
   validateForgetPasswordSchema,
   validateRecoveryPasswordSchema,
   validateRecoveryPassEmailCheckSchema,
+  validateEmailSchema,
 };

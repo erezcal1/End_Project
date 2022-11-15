@@ -1,11 +1,11 @@
 const Joi = require("joi");
 
 const nameRole = {
-  name: Joi.string().min(2).max(255).alphanum().trim().required(),
+  name: Joi.string().min(2).max(255).trim().required(),
 };
 
 const artistRole = {
-  name: Joi.string().min(2).max(255).alphanum().trim().required(),
+  artist: Joi.string().min(2).max(255).required(),
 };
 
 const descriptionRole = {
@@ -13,7 +13,7 @@ const descriptionRole = {
 };
 
 const lyricRole = {
-  lyric: Joi.number().min(0),
+  lyric: Joi.string().min(10).max(16000).required(),
 };
 
 const newSongSchema = Joi.object({
@@ -24,7 +24,7 @@ const newSongSchema = Joi.object({
 });
 
 const validateNewSongSchema = (data) => {
-  return newSongSchema, validateAsync(data, { abortEarly: false });
+  return newSongSchema.validateAsync(data, { abortEarly: false });
 };
 
 module.exports = {

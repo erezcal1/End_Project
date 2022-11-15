@@ -69,8 +69,8 @@ const updatePassword = (email, password) => {
 const selectUserByEmail = (email) => {
   return Users.find({ email });
 };
-const selectSongsByEmail = (email) => {
-  // return Users.find({ email }, favoriteSongs);
+const selectFavsByEmail = (email) => {
+  console.log(email, "email");
   return Users.find({ email });
 };
 
@@ -82,5 +82,5 @@ module.exports = {
   updateEmail,
   updateHeDidIt,
   updateFavorites,
-  selectSongsByEmail,
+  selectFavsByEmail,
 };

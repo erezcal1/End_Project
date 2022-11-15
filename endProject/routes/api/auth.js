@@ -60,11 +60,6 @@ router.post("/signIn", async (req, res) => {
         CustomRes.STATUSES.failed,
         "Invalid Email or Password"
       );
-    // if (!usersData.emailVerification.didHeDoIt)
-    //   throw new CustomRes(
-    //     CustomRes.STATUSES.failed,
-    //     "need to do an email verification"
-    //   );
     const hashResult = await bcrypt.compareHash(
       validateLogIn.password,
       usersData[0].password
@@ -74,10 +69,14 @@ router.post("/signIn", async (req, res) => {
         CustomRes.STATUSES.failed,
         "Invalid Email or Password"
       );
-    let token = await jwt.generateToken({ email: usersData[0].email });
+    let token = await jwt.generateToken({
+      email: usersData[0].email,
+      isAdmin: usersData[0].isAdmin,
+    });
     res.json(new CustomRes(CustomRes.STATUSES.ok, token));
   } catch (e) {
     console.log(e);
+    res.json(new CustomRes(CustomRes.STATUSES.failed, e));
   }
 });
 
@@ -115,7 +114,6 @@ router.post(
       );
       await usersModule.updateHeDidIt(validateEmail.email, true);
       res.json(new CustomRes(CustomRes.STATUSES.ok, "Password Changed"));
-      // TODO: check secretKey expDate, encrypt Email and decrypt email
     } catch (err) {
       res.json(err);
     }
@@ -124,7 +122,6 @@ router.post(
 
 router.post("/forgetPassword", async (req, res) => {
   try {
-    console.log("hello");
     const validateForgetPassword = await usersValidation.validateForgetPasswordSchema(
       req.body
     );
@@ -170,8 +167,6 @@ router.post(
       const validatedRecoverPassword = await usersValidation.validateRecoveryPasswordSchema(
         req.body
       );
-      // decrypt Email - in the future
-      // decrypted Email validation
       const decryptedEmail = crypto.decrypt({
         iv: req.params.iv,
         encryptedData: req.params.encryptedData,
@@ -206,7 +201,6 @@ router.post(
       );
       await usersModule.updatePassword(validateEmail.email, hashedPassword);
       res.json(new CustomRes(CustomRes.STATUSES.ok, "Password Changed"));
-      // TODO: check secretKey expDate, encrypt Email and decrypt email
     } catch (err) {
       res.json(err);
     }

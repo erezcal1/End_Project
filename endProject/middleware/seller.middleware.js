@@ -1,7 +1,7 @@
 const CustomRes = require("../classes/CustomErr");
 
 module.exports = (req, res, next) => {
-  if (req.userData && req.userData.isSeller) {
+  if (req.userData && req.userData.isAdmin) {
     next();
   } else {
     res

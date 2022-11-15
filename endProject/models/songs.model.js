@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const productSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
-  lyrics: { type: Number, default: 0 },
-  image: { type: String },
+  lyrics: { type: String, default: "" },
+  image: { type: String, default: "" },
   artist: { type: String, required: true },
   adminId: { type: Schema.Types.ObjectId, ref: "Users" },
 });
@@ -18,15 +18,16 @@ const selectAllSongs = () => {
 const selectSongsByArtist = (artist) => {
   return Products.find((song) => song.artist === artist);
 };
+
 const selectSong = (songName) => {
-  return Products.find((song) => song.name === songName);
+  return Products.findOne({ name: songName });
 };
-const insertSong = (name, description, lyrics, image, artist, adminId) => {
+
+const insertSong = (name, description, lyrics, artist, adminId) => {
   const product = new Products({
     name,
     description,
     lyrics,
-    image,
     artist,
     adminId,
   });
